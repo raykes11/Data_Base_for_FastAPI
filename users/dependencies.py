@@ -8,8 +8,8 @@ from users import crud
 
 
 async def user_by_id(
-        user_id: Annotated[int, Path],
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    user_id: Annotated[int, Path],
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ) -> Product:
     user = await crud.get_user(session=session, user_id=user_id)
     if user is not None:
@@ -17,5 +17,5 @@ async def user_by_id(
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f'Product {user_id} not found!',
+        detail=f"Product {user_id} not found!",
     )

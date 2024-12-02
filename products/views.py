@@ -1,42 +1,45 @@
-from fastapi import APIRouter,HTTPException,status,Depends
+from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.models import db_helper
 from products import crud
 from products.dependencies import product_by_id
-from products.schemas import Product, ProductCreate, ProductUpdate,ProductUpdatePartial
+from products.schemas import Product, ProductCreate, ProductUpdate, ProductUpdatePartial
 
-router = APIRouter(tags=['Products'])
+router = APIRouter(tags=["Products"])
 
 
-@router.get('/', response_model=list[Product])
+@router.get("/", response_model=list[Product])
 async def get_products(
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ):
     return await crud.get_products(session)
 
 
-@router.post('/', response_model=Product, status_code=status.HTTP_201_CREATED,)
+@router.post(
+    "/",
+    response_model=Product,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_product(
-        product_in: ProductCreate,
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    product_in: ProductCreate,
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    print('__________________',product_in)
-    return await crud.create_product(session=session,product_in=product_in)
+    print("__________________", product_in)
+    return await crud.create_product(session=session, product_in=product_in)
 
 
-
-@router.get('/{product_id}/', response_model=Product)
+@router.get("/{product_id}/", response_model=Product)
 async def get_product(
-        product: Product = Depends(product_by_id),
+    product: Product = Depends(product_by_id),
 ):
     return product
 
 
-@router.put('/{product_id}/')
+@router.put("/{product_id}/")
 async def update_product(
-        product_update: ProductUpdate,
-        product: Product = Depends(product_by_id),
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    product_update: ProductUpdate,
+    product: Product = Depends(product_by_id),
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ):
     return await crud.update_product(
         session=session,
@@ -44,11 +47,12 @@ async def update_product(
         product_update=product_update,
     )
 
-@router.patch('/{product_id}/')
+
+@router.patch("/{product_id}/")
 async def update_product_partial(
-        product_update: ProductUpdatePartial,
-        product: Product = Depends(product_by_id),
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    product_update: ProductUpdatePartial,
+    product: Product = Depends(product_by_id),
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ):
     return await crud.update_product(
         session=session,
@@ -57,9 +61,10 @@ async def update_product_partial(
         partial=True,
     )
 
-@router.delete('/{product_id}/',status_code=status.HTTP_204_NO_CONTENT)
+
+@router.delete("/{product_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_product(
-        product: Product = Depends(product_by_id),
-        session: AsyncSession = Depends(db_helper.session_dependency),
+    product: Product = Depends(product_by_id),
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ) -> None:
-    await crud.delete_product(session=session,product=product)
+    await crud.delete_product(session=session, product=product)

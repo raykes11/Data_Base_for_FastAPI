@@ -1,12 +1,12 @@
 __all__ = (
-    'Base',
-    'DatabaseHelper',
-    'db_helper',
-    'Product',
-    'User',
-    'Attachment',
-    'Order',
-    'OrderProductUserAssociation',
+    "Base",
+    "DatabaseHelper",
+    "db_helper",
+    "Product",
+    "User",
+    "Attachment",
+    "Order",
+    "OrderProductUserAssociation",
 )
 
 

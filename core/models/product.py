@@ -12,17 +12,19 @@ if TYPE_CHECKING:
 
 
 class Product(Base):
-    __tablename__ = 'products'
+    __tablename__ = "products"
     name: Mapped[str]
-    price: Mapped[int] = mapped_column(default=100, server_default='100')
+    price: Mapped[int] = mapped_column(default=100, server_default="100")
     count: Mapped[int]
     property: Mapped[str]
-    attachment_id: Mapped[int | None] = mapped_column(
-        ForeignKey('attachments.id')
+    attachment_id: Mapped[int | None] = mapped_column(ForeignKey("attachments.id"))
+    attachment: Mapped["Attachment"] = relationship(back_populates="products")
+    orders: Mapped[list["Order"]] = relationship(
+        secondary="order_product_user_association", back_populates="products"
     )
-    attachment: Mapped["Attachment"] = relationship(back_populates='products')
-    orders: Mapped[list["Order"]] = relationship(secondary='order_product_user_association',back_populates='products')
-    orders_details: Mapped[list["OrderProductUserAssociation"]] = relationship(back_populates='product')
+    orders_details: Mapped[list["OrderProductUserAssociation"]] = relationship(
+        back_populates="product"
+    )
 
     def __str__(self):
         return f"{self.__class__.__name__}(id={self.id}, product={self.name!r})"
