@@ -9,7 +9,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .product import Product
-    from .order_product_user_association import OrderProductUserAssociation
+    from .order_product_association import OrderProductUserAssociation
     from .user import User
 
 

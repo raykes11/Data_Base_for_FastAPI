@@ -16,4 +16,4 @@ from .product import Product
 from .user import User
 from .attachment import Attachment
 from .order import Order
-from .order_product_user_association import OrderProductUserAssociation
+from .order_product_association import OrderProductUserAssociation

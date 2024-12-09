@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -10,15 +11,14 @@ if TYPE_CHECKING:
 
 class Attachment(Base):
     __tablename__ = "attachments"
-    attachment_lv_1: Mapped[str]
-    attachment_lv_2: Mapped[str] = mapped_column(nullable=True)
-    attachment_lv_3: Mapped[str] = mapped_column(nullable=True)
-    attachment_lv_4: Mapped[str] = mapped_column(nullable=True)
-    attachment_lv_5: Mapped[str] = mapped_column(nullable=True)
+    name: Mapped[str]
+    parent_id: Mapped[int| None]
     products: Mapped[list["Product"]] = relationship(back_populates="attachment")
 
     def __str__(self):
-        return f"{self.__class__.__name__}(id={self.id}, attachment={self.attachment_lv_1!r})"
+        return f"{self.__class__.__name__}(id={self.id}, attachment={self.attachment!r})"
 
     def __repr__(self):
         return str(self)
+
+

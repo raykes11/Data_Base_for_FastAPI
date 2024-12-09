@@ -2,11 +2,9 @@ from pydantic import BaseModel, ConfigDict
 
 
 class AttachmentBase(BaseModel):
-    attachment_lv_1: str
-    attachment_lv_2: str
-    attachment_lv_3: str
-    attachment_lv_4: str
-    attachment_lv_5: str
+    # id: int
+    name: str
+    parent_id: int # add id Attachment
 
 
 class AttachmentCreate(AttachmentBase):
@@ -18,11 +16,8 @@ class AttachmentUpdate(AttachmentCreate):
 
 
 class AttachmentUpdatePartial(AttachmentCreate):
-    attachment_lv_1: str | None = None
-    attachment_lv_2: str | None = None
-    attachment_lv_3: str | None = None
-    attachment_lv_4: str | None = None
-    attachment_lv_5: str | None = None
+    name: str | None
+    parent_id: int | None
 
 
 class Attachment(AttachmentBase):

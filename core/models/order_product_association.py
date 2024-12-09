@@ -10,8 +10,8 @@ if TYPE_CHECKING:
     from .product import Product
 
 
-class OrderProductUserAssociation(Base):
-    __tablename__ = "order_product_user_association"
+class OrderProductAssociation(Base):
+    __tablename__ = "order_product_association"
     __table_args__ = (
         UniqueConstraint("order_id", "product_id", name="idx_unique_order_product"),
     )
